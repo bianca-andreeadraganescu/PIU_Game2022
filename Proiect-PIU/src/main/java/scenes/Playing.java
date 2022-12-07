@@ -3,31 +3,34 @@ package scenes;
 import java.awt.Graphics;
 
 import helpz.LevelBuild;
+import lombok.Getter;
+import lombok.Setter;
 import main.Game;
 import managers.TileManager;
+import ui.BottomBar;
 import ui.MyButton;
 
 import static main.GameStates.MENU;
 import static main.GameStates.SetGameState;
 
+@Getter
+@Setter
 public class Playing extends GameScene implements SceneMethods {
 
 	private int[][] lvl;
 	private TileManager tileManager;
 	private MyButton bMenu;
+	private BottomBar bottomBar;
 
 	public Playing(Game game) {
 		super(game);
 
-		initButtons();
 		lvl = LevelBuild.getLevelData();
 		tileManager = new TileManager();
+		bottomBar = new BottomBar(0,640, 640, 100, this);
 
 	}
-	private void initButtons() {
-		bMenu = new MyButton("Menu", 2, 2, 100, 30);
 
-	}
 
 
 	@Override
@@ -39,39 +42,39 @@ public class Playing extends GameScene implements SceneMethods {
 				g.drawImage(tileManager.getSprite(id), x * 32, y * 32, null);
 			}
 		}
-
-		drawButtons(g);
-	}
-	private void drawButtons(Graphics g) {
-		bMenu.draw(g);
-
+		bottomBar.draw(g);
 	}
 
+
+
+
+
+	// it is checked if the bottom is in that area
 	@Override
 	public void mouseClicked(int x, int y) {
-		if (bMenu.getBounds().contains(x, y))
-			SetGameState(MENU);
-
+		if(y>=640){
+			bottomBar.mouseClicked(x,y);
+		}
 	}
 
 	@Override
 	public void mouseMoved(int x, int y) {
-		bMenu.setMouseOver(false);
-		if (bMenu.getBounds().contains(x, y))
-			bMenu.setMouseOver(true);
-
+		if(y>=640){
+			bottomBar.mouseMoved(x,y);
+		}
 	}
 
 	@Override
 	public void mousePressed(int x, int y) {
-		if (bMenu.getBounds().contains(x, y))
-			bMenu.setMousePressed(true);
-
+		if(y>=640){
+			bottomBar.mousePressed(x,y);
+		}
 	}
 
 	@Override
 	public void mouseReleased(int x, int y) {
-		bMenu.resetBooleans();
-
+		if(y>=640){
+			bottomBar.mouseReleased(x,y);
+		}
 	}
 }

@@ -1,22 +1,44 @@
 package ui;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+@Getter
+@Setter
 public class MyButton {
 
 	private int x, y, width, height;
 	private String text;
 	private Rectangle bounds;
 	private boolean mouseOver, mousePressed;
+	private int id;
 
+
+	//for normal buttons
 	public MyButton(String text, int x, int y, int width, int height) {
 		this.text = text;
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		this.id = -1; // in case we access id
+
+		initBounds();
+	}
+
+
+	//for tiles buttons bcs we need id
+	public MyButton(String text, int x, int y, int width, int height, int id) {
+		this.text = text;
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		this.id = id;
 
 		initBounds();
 	}
@@ -68,16 +90,5 @@ public class MyButton {
 		this.mousePressed = false;
 	}
 
-	public void setMousePressed(boolean mousePressed) {
-		this.mousePressed = mousePressed;
-	}
-
-	public void setMouseOver(boolean mouseOver) {
-		this.mouseOver = mouseOver;
-	}
-
-	public Rectangle getBounds() {
-		return bounds;
-	}
 
 }

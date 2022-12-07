@@ -20,11 +20,15 @@ public class TileManager {
 	}
 
 	private void createTiles() {
+		int id=0;
+		tiles.add(MARGIN = new Tile(getSprite(10, 0), id++, "MARGIN"));
+		tiles.add(REDLINE = new Tile(getSprite(9, 0), id++, "REDLINE"));
+		tiles.add(MIDDLE = new Tile(getSprite(11, 2), id++,"MIDLINE"));
 
-		tiles.add(MARGIN = new Tile(getSprite(10, 0)));
-		tiles.add(REDLINE = new Tile(getSprite(9, 0)));
-		tiles.add(MIDDLE = new Tile(getSprite(11, 2)));
+	}
 
+	public Tile getTile(int id){
+		return tiles.get(id);
 	}
 
 	private void loadAtalas() {

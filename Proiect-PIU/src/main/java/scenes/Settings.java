@@ -22,6 +22,7 @@ public class Settings extends GameScene implements SceneMethods {
 	}
 
 
+
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.BLUE);
@@ -60,6 +61,5 @@ public class Settings extends GameScene implements SceneMethods {
 
 	private void resetButtons() {
 		bMenu.resetBooleans();
-
 	}
 }
