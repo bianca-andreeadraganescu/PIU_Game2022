@@ -18,5 +18,16 @@ public class Tile {
 		this.name = name;
 	}
 
+	public BufferedImage getSprite() {
+		return sprite;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
 
 }
