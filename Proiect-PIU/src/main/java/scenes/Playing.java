@@ -1,8 +1,10 @@
 package scenes;
 
 import java.awt.Graphics;
+import java.io.FileNotFoundException;
 
 import helpz.LevelBuild;
+import helpz.LoadSave;
 import lombok.Getter;
 import lombok.Setter;
 import main.Game;
@@ -28,15 +30,27 @@ public class Playing extends GameScene implements SceneMethods {
 	private boolean drawSelect;
 	private int lastTileX, lastTileY;
 
-	public Playing(Game game) {
+	public Playing(Game game)   {
 		super(game);
 
 		lvl = LevelBuild.getLevelData();
 		tileManager = new TileManager();
 		bottomBar = new BottomBar(0,640, 640, 100, this);
-
+		createDefaultLevel();
+		loadDefaultLevel();
 	}
 
+	private void loadDefaultLevel() {
+		lvl = LoadSave.GetLevelData("newLevel");
+	}
+
+	private void createDefaultLevel() {
+		int[] arr = new int[400];
+		for(int i=0; i<arr.length; i++){
+			arr[i] = 0;
+		}
+		LoadSave.CreateLevel("newLevel", arr);
+	}
 
 
 	@Override
@@ -123,5 +137,9 @@ public class Playing extends GameScene implements SceneMethods {
 		}else{
 			changeTile(x,y);
 		}
+	}
+
+	public void saveLevel() {
+		LoadSave.SaveLevel("newLevel", lvl);
 	}
 }
