@@ -3,8 +3,10 @@ package managers;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import helpz.Constants;
 import helpz.LoadSave;
 import objects.Tile;
+import static helpz.Constants.Tiles.*;
 
 public class TileManager {
 
@@ -21,9 +23,12 @@ public class TileManager {
 
 	private void createTiles() {
 		int id=0;
-		tiles.add(MARGIN = new Tile(getSprite(10, 0), id++, "MARGIN"));
-		tiles.add(REDLINE = new Tile(getSprite(9, 0), id++, "REDLINE"));
-		tiles.add(MIDDLE = new Tile(getSprite(11, 2), id++,"MIDLINE"));
+		tiles.add(MARGIN = new Tile(getSprite(9, 0), id++, MARGIN_TILE));
+		tiles.add(REDLINE = new Tile(getSprite(7, 0), id++, REDLINE_TILE));
+		tiles.add(MIDDLE = new Tile(getSprite(11, 2), id++, REDLINE_TILE));
+		tiles.add(REDLINE = new Tile(getSprite(6, 0), id++, REDLINE_TILE));
+		tiles.add(REDLINE = new Tile(getSprite(6, 1), id++, REDLINE_TILE));
+		tiles.add(REDLINE = new Tile(getSprite(8, 2), id++, REDLINE_TILE));
 
 	}
 

@@ -10,12 +10,13 @@ public class Tile {
 	private BufferedImage sprite;
 	private String name;
 	private int id;
+	private int tyleType;
 
-	public Tile(BufferedImage sprite, int id, String name)
+	public Tile(BufferedImage sprite, int id, int tyleType)
 	{
 		this.sprite = sprite;
 		this.id = id;
-		this.name = name;
+		this.tyleType = tyleType;
 	}
 
 	public BufferedImage getSprite() {

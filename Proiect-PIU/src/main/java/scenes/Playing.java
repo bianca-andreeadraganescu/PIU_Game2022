@@ -1,5 +1,6 @@
 package scenes;
 
+import enemies.EnemyManager;
 import helpz.LoadSave;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +17,7 @@ public class Playing extends GameScene implements SceneMethods {
     private int[][] lvl;
     private ActionBar bottomBar;
     private int mouseX, mouseY;
+    private EnemyManager enemyManager;
 
     public Playing(Game game) {
         super(game);
@@ -23,6 +25,8 @@ public class Playing extends GameScene implements SceneMethods {
         loadDefaultLevel();
 
         bottomBar = new ActionBar(0, 640, 640, 100, this);
+
+        enemyManager = new EnemyManager(this);
     }
 
     private void loadDefaultLevel() {
@@ -41,11 +45,16 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
 
+    public void update(){
+        updateTick();
+        enemyManager.update();
+    }
     @Override
     public void render(Graphics g) {
 
         drawLevel(g);
         bottomBar.draw(g);
+        enemyManager.draw(g);
     }
 
     private void drawLevel(Graphics g) {
@@ -56,7 +65,18 @@ public class Playing extends GameScene implements SceneMethods {
             }
         }
     }
-
+    public int getTileType(int x, int y) {
+        int xCord = x/32;
+        int yCord = y/32;
+        if(xCord<0 || xCord >19){
+            return 0;
+        }
+        if(yCord<0 || yCord >19){
+            return 0;
+        }
+        int id = lvl[y/32][x/32];
+        return game.getTileManager().getTile(id).getTyleType();
+    }
     private BufferedImage getSprite(int spriteID) {
         return game.getTileManager().getSprite(spriteID);
     }
@@ -120,5 +140,6 @@ public class Playing extends GameScene implements SceneMethods {
     @Override
     public void mouseDragged(int x, int y) {
     }
+
 
 }
