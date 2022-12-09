@@ -46,7 +46,6 @@ public class Playing extends GameScene implements SceneMethods {
 
 
     public void update(){
-        updateTick();
         enemyManager.update();
     }
     @Override

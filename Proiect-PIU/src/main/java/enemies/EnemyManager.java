@@ -26,6 +26,7 @@ public class EnemyManager {
         // for performance loading img enemies
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         enemyImgs[0] = LoadSave.getSpriteAtlas().getSubimage(0, 32, 32, 32);
+        // for future enemies
         enemyImgs[1] = LoadSave.getSpriteAtlas().getSubimage(32, 32, 32, 32);
         enemyImgs[2] = LoadSave.getSpriteAtlas().getSubimage(2*32, 32, 32, 32);
         enemyImgs[3] = LoadSave.getSpriteAtlas().getSubimage(3*32, 32, 32, 32);

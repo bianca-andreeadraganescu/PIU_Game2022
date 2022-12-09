@@ -37,14 +37,12 @@ public class Editing extends GameScene implements SceneMethods {
 
     @Override
     public void render(Graphics g) {
-        updateTick();
         drawLevel(g);
         toolbar.draw(g);
         drawSelectedTile(g);
     }
 
     public void update(){
-        updateTick();
     }
 
     private void drawLevel(Graphics g) {

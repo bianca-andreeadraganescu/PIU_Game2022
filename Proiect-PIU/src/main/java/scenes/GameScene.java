@@ -17,13 +17,5 @@ public class GameScene {
 		return game;
 	}
 
-	public void updateTick(){
-		tick++;
-		if(tick >= ANNIMATION_SPEED){
-			tick = 0;
-			animationIndex++;
-			if(animationIndex >= 4)
-				animationIndex = 0;
-		}
-	}
+
 }
