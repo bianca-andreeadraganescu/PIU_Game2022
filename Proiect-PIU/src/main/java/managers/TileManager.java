@@ -25,7 +25,7 @@ public class TileManager {
 		int id=0;
 		tiles.add(MARGIN = new Tile(getSprite(9, 0), id++, MARGIN_TILE));
 		tiles.add(REDLINE = new Tile(getSprite(7, 0), id++, REDLINE_TILE));
-		tiles.add(MIDDLE = new Tile(getSprite(11, 2), id++, REDLINE_TILE));
+		tiles.add(MIDDLE = new Tile(getSprite(5, 2), id++, REDLINE_TILE));
 		tiles.add(REDLINE = new Tile(getSprite(6, 0), id++, REDLINE_TILE));
 		tiles.add(REDLINE = new Tile(getSprite(6, 1), id++, REDLINE_TILE));
 		tiles.add(REDLINE = new Tile(getSprite(8, 2), id++, REDLINE_TILE));
@@ -38,7 +38,7 @@ public class TileManager {
 
 	private void loadAtalas() {
 
-		atlas = LoadSave.getSpriteAtlas();
+		atlas = LoadSave.getSpriteAtlas("Tiles.png");
 
 	}
 

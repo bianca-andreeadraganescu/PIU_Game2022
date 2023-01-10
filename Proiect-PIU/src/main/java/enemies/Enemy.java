@@ -9,7 +9,7 @@ import static helpz.Constants.Direction.*;
 
 @Getter
 @Setter
-public class Enemy {
+public abstract class Enemy {
     private float x, y;
     private Rectangle bounds;
     private int health;
@@ -23,7 +23,7 @@ public class Enemy {
         this.ID = id;
         this.enemyType = enemyType;
         bounds = new Rectangle((int)x, (int)y, 32, 32);
-        lastDir = RIGHT;
+        lastDir = -1;
     }
 
     public void Move(float speed, int dir){

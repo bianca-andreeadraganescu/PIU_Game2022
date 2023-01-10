@@ -5,57 +5,60 @@ import scenes.Playing;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import static helpz.Constants.Direction.*;
+import static helpz.Constants.Enemies.*;
 import static helpz.Constants.Tiles.*;
 
 public class EnemyManager {
 
     private Playing playing;
     private BufferedImage[] enemyImgs;
-    private Enemy testEnemy;
-    private float speed = 0.5F;
+    private ArrayList<Enemy> enemies = new ArrayList<>();
+    //private float speed = 0.5F;
 
     public EnemyManager(Playing playing){
         this.playing = playing;
         enemyImgs = new BufferedImage[4];
-        testEnemy = new Enemy(32*1, 32*17, 0,0);
+        addEnemy(0*32, 13*32, MONSTER);
+        addEnemy(5*32, 13*32, BAT);
         loadEnemyImgs();
     }
     private void loadEnemyImgs(){
         // for performance loading img enemies
-        BufferedImage atlas = LoadSave.getSpriteAtlas();
-        enemyImgs[0] = LoadSave.getSpriteAtlas().getSubimage(0, 32, 32, 32);
-        // for future enemies
-        enemyImgs[1] = LoadSave.getSpriteAtlas().getSubimage(32, 32, 32, 32);
-        enemyImgs[2] = LoadSave.getSpriteAtlas().getSubimage(2*32, 32, 32, 32);
-        enemyImgs[3] = LoadSave.getSpriteAtlas().getSubimage(3*32, 32, 32, 32);
-
+        BufferedImage atlas = LoadSave.getSpriteAtlas("spriteatlas.png");
+        enemyImgs[0] = atlas.getSubimage(0, 32, 32, 32);
+        enemyImgs[1] = atlas.getSubimage(32, 32, 32, 32);
+//        for(int i=0; i< 2; i++){
+//            enemyImgs[i] = atlas.getSubimage(i*32, 32, 32, 32);
+//        }
     }
 
     public void update(){
         // is next tile a road go
-        if(isNextTileRoad(testEnemy)){
-            
+        for(Enemy e: enemies){
+            updateEnemyMove(e);
         }
     }
 
     // we need to check if tile is possible , dir
-    private boolean isNextTileRoad(Enemy e) {
-        int newX = (int)(e.getX() + GetSpeedAndWidth(e.getLastDir()));
-        int newY = (int)(e.getY() + GetSpeedAndHeight(e.getLastDir()));
+    private void updateEnemyMove(Enemy e) {
+        if(e.getLastDir() == -1){
+            setNEwDirectionAndMove(e);
+        }
+        int newX = (int)(e.getX() + GetSpeedAndWidth(e.getLastDir(), e.getEnemyType()));
+        int newY = (int)(e.getY() + GetSpeedAndHeight(e.getLastDir(), e.getEnemyType()));
 
         if(getTileType(newX, newY) == REDLINE_TILE){
             //keep moving in same direction
-            e.Move(speed, e.getLastDir());
+            e.Move(GetSpeed(e.getEnemyType()), e.getLastDir());
         }else if (isAtEnd(e)) {
 
         }else {
             //set new direction
             setNEwDirectionAndMove(e);
         }
-
-        return false;
     }
 
     private void setNEwDirectionAndMove(Enemy e) {
@@ -67,18 +70,18 @@ public class EnemyManager {
         fixEnemyOffsetTile(e, dir, xCord, yCord);
 
         if(dir== LEFT || dir ==RIGHT){
-            int newY = (int)(e.getY() + GetSpeedAndHeight(UP));
+            int newY = (int)(e.getY() + GetSpeedAndHeight(UP, e.getEnemyType()));
             if(getTileType((int)e.getX(), newY) == REDLINE_TILE){
-                e.Move(speed, UP);
+                e.Move(GetSpeed(e.getEnemyType()), UP);
             } else{
-                e.Move(speed,DOWN);
+                e.Move(GetSpeed(e.getEnemyType()), DOWN);
             }
         } else{
-            int newX = (int) (e.getX() + GetSpeedAndWidth(RIGHT));
+            int newX = (int) (e.getX() + GetSpeedAndWidth(RIGHT, e.getEnemyType()));
             if(getTileType(newX, (int)e.getY()) == REDLINE_TILE){
-                e.Move(speed, RIGHT);
+                e.Move(GetSpeed(e.getEnemyType()), RIGHT);
             } else{
-                e.Move(speed,LEFT);
+                e.Move(GetSpeed(e.getEnemyType()), LEFT);
             }
         }
     }
@@ -90,7 +93,7 @@ public class EnemyManager {
                     xCord++;
                 break;
             case DOWN:
-                if(yCord<0)
+                if(yCord<19)
                     yCord++;
                 break;
         }
@@ -106,31 +109,44 @@ public class EnemyManager {
         return playing.getTileType(x,y);
     }
 
-    private float GetSpeedAndHeight(int dir) {
+    private float GetSpeedAndHeight(int dir, int enemyType) {
         if(dir == UP){
-            return -speed;
+            return -GetSpeed(enemyType);
         } else if(dir == DOWN){
-            return speed+32;
+            return GetSpeed(enemyType)+32;
         }
         return 0;
 
     }
 
-    private float GetSpeedAndWidth(int dir) {
+    private float GetSpeedAndWidth(int dir, int enemyType) {
         if(dir == LEFT){
-            return -speed;
+            return -GetSpeed(enemyType);
         } else if(dir == RIGHT){
-            return speed+32;
+            return GetSpeed(enemyType)+32;
         }
         return 0;
+    }
+
+    public void addEnemy(int x, int y, int enemyType){
+        switch(enemyType){
+            case MONSTER:
+                enemies.add(new Monster(x,y,0));
+                break;
+            case BAT:
+                enemies.add(new Bat(x, y, 0));
+                break;
+        }
     }
 
     public void draw(Graphics g){
-        drawEnemy(testEnemy, g);
+        for(Enemy e: enemies){
+            drawEnemy(e, g);
+        }
     }
 
     private void drawEnemy(Enemy e, Graphics g){
-        g.drawImage(enemyImgs[0],(int)e.getX(), (int)e.getY(), null );
+        g.drawImage(enemyImgs[e.getEnemyType()],(int)e.getX(), (int)e.getY(), null );
     }
 
 }

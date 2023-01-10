@@ -11,13 +11,15 @@ public class LoadSave {
 
 	//Incarcarea sprite-ului care contine toate tile-urile
 	//Fiecare tile e de 32x32
-	public static BufferedImage getSpriteAtlas() {
+	public static BufferedImage getSpriteAtlas(String name) {
 
 		BufferedImage img = null;
-		InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("Tiles.png");
+		InputStream is1 = LoadSave.class.getClassLoader().getResourceAsStream(name);
+		InputStream is2 = LoadSave.class.getClassLoader().getResourceAsStream("spriteatlas.png");
 
 		try {
-			img = ImageIO.read(is);
+			img = ImageIO.read(is1);
+			//img[1] = ImageIO.read(is2);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -25,14 +27,14 @@ public class LoadSave {
 	}
 
 	// txt file
-	public static void CreateFile() {
-		File txtFile = new File("testTextFile.txt");
-		try {
-			txtFile.createNewFile();
-		} catch (IOException e){
-			e.printStackTrace();
-		}
-	}
+//	public static void CreateFile() {
+//		File txtFile = new File("testTextFile.txt");
+//		try {
+//			txtFile.createNewFile();
+//		} catch (IOException e){
+//			e.printStackTrace();
+//		}
+//	}
 
 
 	public static void CreateLevel(String name, int[] idArr){
