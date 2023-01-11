@@ -20,28 +20,28 @@ public abstract class Enemy {
     protected int lastDir;
     protected boolean alive = true;
 
-    public Enemy(float x, float y, int id,int enemyType){
+    public Enemy(float x, float y, int id, int enemyType) {
         this.x = x;
         this.y = y;
         this.ID = id;
         this.enemyType = enemyType;
-        bounds = new Rectangle((int)x, (int)y, 32, 32);
+        bounds = new Rectangle((int) x, (int) y, 32, 32);
         lastDir = -1;
     }
 
-    protected void setStartHealth(){
+    protected void setStartHealth() {
         health = Constants.Enemies.GetStartHealth(enemyType);
         maxHealth = health;
     }
 
-    public float getHealthBarFloat(){
-        return health/(float)maxHealth;
+    public float getHealthBarFloat() {
+        return health / (float) maxHealth;
     }
 
 
-    public void Move(float speed, int dir){
+    public void Move(float speed, int dir) {
         lastDir = dir;
-        switch (dir){
+        switch (dir) {
             case LEFT:
                 this.x -= speed;
                 break;
@@ -53,11 +53,16 @@ public abstract class Enemy {
                 break;
             case DOWN:
                 this.y += speed;
-
         }
+        updateHitBox();
     }
 
-    public void setPos(int x, int y){
+    private void updateHitBox() {
+        bounds.x = (int) x;
+        bounds.y = (int) y;
+    }
+
+    public void setPos(int x, int y) {
         //for position fix, future move
         this.x = x;
         this.y = y;
@@ -65,7 +70,7 @@ public abstract class Enemy {
 
     public void hurt(int dmg) {
         this.health -= dmg;
-        if(health <=0){
+        if (health <= 0) {
             alive = false;
         }
     }

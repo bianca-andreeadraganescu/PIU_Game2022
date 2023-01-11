@@ -1,10 +1,12 @@
 package scenes;
 
+import enemies.Enemy;
 import enemies.EnemyManager;
 import helpz.LoadSave;
 import lombok.Getter;
 import lombok.Setter;
 import main.Game;
+import managers.ProjectilManager;
 import managers.TowerManager;
 import objects.Tower;
 import ui.ActionBar;
@@ -24,6 +26,7 @@ public class Playing extends GameScene implements SceneMethods {
     private int mouseX, mouseY;
     private EnemyManager enemyManager;
     private TowerManager towerManager;
+    private ProjectilManager projectilManager;
     private Tower selectedTower;
 
     public Playing(Game game) {
@@ -36,6 +39,8 @@ public class Playing extends GameScene implements SceneMethods {
         enemyManager = new EnemyManager(this);
 
         towerManager = new TowerManager(this);
+
+        projectilManager = new ProjectilManager(this);
     }
 
     private void loadDefaultLevel() {
@@ -57,6 +62,7 @@ public class Playing extends GameScene implements SceneMethods {
     public void update() {
         enemyManager.update();
         towerManager.update();
+        projectilManager.update();
     }
 
     public void setSelectedTower(Tower selectedTower) {
@@ -70,6 +76,7 @@ public class Playing extends GameScene implements SceneMethods {
         bottomBar.draw(g);
         enemyManager.draw(g);
         towerManager.draw(g);
+        projectilManager.draw(g);
         drawSelectedTower(g);
         drawHighLight(g);
     }
@@ -196,5 +203,9 @@ public class Playing extends GameScene implements SceneMethods {
 
     public TowerManager getTowerManager() {
         return towerManager;
+    }
+
+    public void shootEnemy(Tower t, Enemy e) {
+        projectilManager.newProjectil(t,e);
     }
 }

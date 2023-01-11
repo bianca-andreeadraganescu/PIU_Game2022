@@ -29,6 +29,24 @@ public class Constants {
         }
     }
 
+    public static class Projectiles {
+        public static final int ARROW = 0;
+        public static final int CHAINS = 1;
+        public static final int BOMB = 2;
+
+        public static float GetSpeed(int type) {
+            switch (type) {
+                case ARROW:
+                    return 8f;
+                case BOMB:
+                    return 4f;
+                case CHAINS:
+                    return 6f;
+            }
+            return 0f;
+        }
+    }
+
     public static class Towers{
         public static final int CANON = 0;
         public static final int ARCHER = 1;
@@ -42,7 +60,7 @@ public class Constants {
             };
         }
 
-        public static float GetStartDmg(int towerType){
+        public static int GetStartDmg(int towerType){
             return switch (towerType) {
                 case CANON -> 25;
                 case ARCHER -> 15;
