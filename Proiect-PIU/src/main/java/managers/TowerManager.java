@@ -1,6 +1,8 @@
 package managers;
 
+import enemies.Enemy;
 import helpz.LoadSave;
+import helpz.Utilz;
 import lombok.Getter;
 import lombok.Setter;
 import objects.Tower;
@@ -35,13 +37,42 @@ public class TowerManager {
     }
 
     public void update(){
+        attackEnemyIsClose();
 
     }
+
+    private void attackEnemyIsClose() {
+        for(Tower t: towers)
+            for(Enemy e: playing.getEnemyManager().getEnemies()){
+                if(e.isAlive()) {
+                    if (isEnemyInRange(t,e) == true) {
+                        e.hurt(1);
+                    } else {
+                        // nothing
+                    }
+                }
+            }
+    }
+
+    private boolean isEnemyInRange(Tower t, Enemy e) {
+        int range = Utilz.GetHypoDistance(t.getX(), t.getY(), e.getX(), e.getY());
+        return range < t.getRange();
+    }
+
 
     public void draw(Graphics g){
         //g.drawImage(towerImages[ARCHER],tower.getX(), tower.getY(), null );
         for(Tower t: towers)
             g.drawImage(towerImages[t.getTowerType()], t.getX(), t.getY(), null);
+    }
+
+    public Tower getTowerAt(int x, int y) {
+        for(Tower t: towers){
+            if(t.getX() == x && t.getY() ==y){
+                return t;
+            }
+        }
+        return null;
     }
 
     public BufferedImage[] getTowerImg(){

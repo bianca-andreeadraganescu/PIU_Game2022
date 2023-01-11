@@ -71,6 +71,11 @@ public class Playing extends GameScene implements SceneMethods {
         enemyManager.draw(g);
         towerManager.draw(g);
         drawSelectedTower(g);
+        drawHighLight(g);
+    }
+    public void drawHighLight(Graphics g){
+        g.setColor(Color.GREEN);
+       g.drawRect(mouseX, mouseY,32, 32);
     }
 
     private void drawSelectedTower(Graphics g) {
@@ -125,11 +130,20 @@ public class Playing extends GameScene implements SceneMethods {
         else {
             if(selectedTower != null) {
                 if (isTileStone(mouseX, mouseY)) {
-                    towerManager.addTower(selectedTower, mouseX, mouseY);
-                    selectedTower = null;
+                    if(getTowerAt(mouseX, mouseY) == null) {
+                        towerManager.addTower(selectedTower, mouseX, mouseY);
+                        selectedTower = null;
+                    }
+                }
+            } else {
+                Tower t = getTowerAt(mouseX,mouseY);
+                    bottomBar.displaayTower(t);
                 }
             }
         }
+
+    private Tower getTowerAt(int x, int y) {
+        return towerManager.getTowerAt(x,y);
     }
 
     private boolean isTileStone(int x, int y) {

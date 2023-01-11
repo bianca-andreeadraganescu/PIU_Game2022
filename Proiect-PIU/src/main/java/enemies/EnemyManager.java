@@ -1,6 +1,9 @@
 package enemies;
 
+import helpz.Constants;
 import helpz.LoadSave;
+import lombok.Getter;
+import lombok.Setter;
 import scenes.Playing;
 
 import java.awt.*;
@@ -11,13 +14,15 @@ import static helpz.Constants.Direction.*;
 import static helpz.Constants.Enemies.*;
 import static helpz.Constants.Tiles.*;
 
+@Getter
+@Setter
 public class EnemyManager {
 
     private Playing playing;
     private BufferedImage[] enemyImgs;
     private ArrayList<Enemy> enemies = new ArrayList<>();
     //private float speed = 0.5F;
-
+    private int healthBar = 20;
     public EnemyManager(Playing playing){
         this.playing = playing;
         enemyImgs = new BufferedImage[4];
@@ -38,7 +43,9 @@ public class EnemyManager {
     public void update(){
         // is next tile a road go
         for(Enemy e: enemies){
-            updateEnemyMove(e);
+            if(e.isAlive()) {
+                updateEnemyMove(e);
+            }
         }
     }
 
@@ -141,9 +148,23 @@ public class EnemyManager {
 
     public void draw(Graphics g){
         for(Enemy e: enemies){
-            drawEnemy(e, g);
+            if(e.isAlive()) {
+                drawEnemy(e, g);
+                drawHealthBar(e, g);
+            }
         }
     }
+
+    private void drawHealthBar(Enemy e, Graphics g) {
+        g.setColor(Color.red);
+        g.fillRect((int)e.getX() + 16 - (getNewBarWidth(e)/2), (int)e.getY()-5,getNewBarWidth(e),3);
+    }
+
+    private int getNewBarWidth(Enemy e){
+        return (int)(healthBar * e.getHealthBarFloat());
+    }
+
+
 
     private void drawEnemy(Enemy e, Graphics g){
         g.drawImage(enemyImgs[e.getEnemyType()],(int)e.getX(), (int)e.getY(), null );
