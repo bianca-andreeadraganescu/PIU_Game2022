@@ -48,7 +48,7 @@ public class TowerManager {
     private void attackEnemyIsClose(Tower t) {
         for (Enemy e : playing.getEnemyManager().getEnemies()) {
             if (e.isAlive()) {
-                if (isEnemyInRange(t, e) == true) {
+                if (isEnemyInRange(t, e)) {
                     if (t.isCooldownOver()) {
                         playing.shootEnemy(t, e);
                         t.resetCooldown();

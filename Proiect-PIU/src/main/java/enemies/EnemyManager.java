@@ -26,8 +26,7 @@ public class EnemyManager {
     public EnemyManager(Playing playing){
         this.playing = playing;
         enemyImgs = new BufferedImage[4];
-        addEnemy(0*32, 13*32, MONSTER);
-        addEnemy(5*32, 13*32, BAT);
+//        }
         loadEnemyImgs();
     }
     private void loadEnemyImgs(){
@@ -41,12 +40,36 @@ public class EnemyManager {
     }
 
     public void update(){
-        // is next tile a road go
+        updateWavemanager();
+        if(isTimeForNewEnemy()){
+            spawnEnemy();
+        }
+
         for(Enemy e: enemies){
             if(e.isAlive()) {
                 updateEnemyMove(e);
             }
         }
+    }
+
+    private void updateWavemanager() {
+        playing.getWaveManager().update();
+    }
+
+    private boolean isTimeForNewEnemy() {
+        if(playing.getWaveManager().isTimeForNewEnemy()){
+            if(playing.getWaveManager().isTimeForNewEnemy()){
+                if(playing.getWaveManager().isThereMoreEnemiesInWave()){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private void spawnEnemy() {
+        addEnemy(playing.getWaveManager().getNextEnemy());
     }
 
     // we need to check if tile is possible , dir
@@ -61,7 +84,8 @@ public class EnemyManager {
             //keep moving in same direction
             e.Move(GetSpeed(e.getEnemyType()), e.getLastDir());
         }else if (isAtEnd(e)) {
-
+            e.kill();
+            System.out.println("You lost a life ");
         }else {
             //set new direction
             setNEwDirectionAndMove(e);
@@ -108,8 +132,11 @@ public class EnemyManager {
     }
 
     private boolean isAtEnd(Enemy e) {
+        //START TILE IS X = 0 ; Y = 13*32
+        int x = (int)e.getX()/32;
+        int y = (int)e.getY()/32;
+        return  x == 18 && y == 6;
         //TODO: here we ll check if the enemy is at the final of the road
-        return false;
     }
 
     private int getTileType(int x, int y) {
@@ -135,14 +162,13 @@ public class EnemyManager {
         return 0;
     }
 
-    public void addEnemy(int x, int y, int enemyType){
-        switch(enemyType){
-            case MONSTER:
-                enemies.add(new Monster(x,y,0));
-                break;
-            case BAT:
-                enemies.add(new Bat(x, y, 0));
-                break;
+    public void addEnemy( int enemyType){
+        //START TILE IS X = 0 ; Y = 13*32
+
+        int x = 0, y =13*32;
+        switch (enemyType) {
+            case MONSTER -> enemies.add(new Monster(x, y, 0));
+            case BAT -> enemies.add(new Bat(x, y, 0));
         }
     }
 

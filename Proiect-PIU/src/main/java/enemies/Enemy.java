@@ -74,4 +74,10 @@ public abstract class Enemy {
             alive = false;
         }
     }
+
+    public void kill() {
+        //kill the enemy at the final of the road
+        alive = false;
+        health = 0;
+    }
 }

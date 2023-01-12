@@ -71,6 +71,9 @@ public class ActionBar extends Bar {
             g.setFont(new Font("Monospaced", Font.BOLD,15));
             g.drawString("" + Constants.Towers.GetName(displayedTower.getTowerType()) ,490,660);
             g.drawString("ID: " + displayedTower.getId() ,490,675);
+            g.drawString("Damage: " + displayedTower.getDmg() ,490,690);
+            g.drawString("Range: " + displayedTower.getRange() ,490,705);
+
             drawDisplayedTowerRange(g);
         }
     }
@@ -81,12 +84,12 @@ public class ActionBar extends Bar {
         // it is in center of a tower but not in the center of the circle
         g.drawOval(displayedTower.getX() + 16 - (int) displayedTower.getRange()/2
                 , displayedTower.getY() + 16 - (int) displayedTower.getRange()/2,
-                (int) displayedTower.getRange(), (int) displayedTower.getRange());
-        g.drawOval(5,5,5,5);
+                (int) (displayedTower.getRange()/32)*32, (int)( displayedTower.getRange()/32)*32);
+        //g.drawOval(5,5,5,5);
     }
 
 
-    public void displaayTower(Tower t){
+    public void displayTower(Tower t){
         displayedTower = t;
     }
 

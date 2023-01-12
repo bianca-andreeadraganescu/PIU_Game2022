@@ -8,6 +8,7 @@ import lombok.Setter;
 import main.Game;
 import managers.ProjectilManager;
 import managers.TowerManager;
+import managers.WaveManager;
 import objects.Tower;
 import ui.ActionBar;
 
@@ -15,7 +16,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import static helpz.Constants.Tiles.MARGIN_TILE;
-import static helpz.Constants.Tiles.MIDLINE_TILE;
 
 @Getter
 @Setter
@@ -26,6 +26,7 @@ public class Playing extends GameScene implements SceneMethods {
     private int mouseX, mouseY;
     private EnemyManager enemyManager;
     private TowerManager towerManager;
+    private WaveManager waveManager;
     private ProjectilManager projectilManager;
     private Tower selectedTower;
 
@@ -41,6 +42,8 @@ public class Playing extends GameScene implements SceneMethods {
         towerManager = new TowerManager(this);
 
         projectilManager = new ProjectilManager(this);
+
+        waveManager = new WaveManager(this);
     }
 
     private void loadDefaultLevel() {
@@ -144,7 +147,7 @@ public class Playing extends GameScene implements SceneMethods {
                 }
             } else {
                 Tower t = getTowerAt(mouseX,mouseY);
-                    bottomBar.displaayTower(t);
+                    bottomBar.displayTower(t);
                 }
             }
         }
