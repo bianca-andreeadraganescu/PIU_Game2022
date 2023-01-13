@@ -1,5 +1,8 @@
-package enemies;
+package managers;
 
+import enemies.Bat;
+import enemies.Enemy;
+import enemies.Monster;
 import helpz.Constants;
 import helpz.LoadSave;
 import lombok.Getter;

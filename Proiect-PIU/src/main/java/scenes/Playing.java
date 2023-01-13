@@ -1,7 +1,7 @@
 package scenes;
 
 import enemies.Enemy;
-import enemies.EnemyManager;
+import managers.EnemyManager;
 import helpz.LoadSave;
 import lombok.Getter;
 import lombok.Setter;
